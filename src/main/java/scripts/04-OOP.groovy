@@ -31,7 +31,7 @@ class Tester extends Employee {
 
 class Developer extends Employee {
 
-    void makeCoffe() {
+    void makeCoffee() {
         println "Please..."
     }
 
@@ -49,7 +49,7 @@ void printInfo(Employee ... employees) {
 
 Employee tester = new Tester()
 Employee developer = new Developer()
-Tester testr2 = (Employee) tester
+Tester test2 = (Employee) tester
 
 
 println tester.getInfo()
