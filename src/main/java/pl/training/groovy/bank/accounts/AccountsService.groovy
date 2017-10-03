@@ -1,22 +1,18 @@
 package pl.training.groovy.bank.accounts
 
 import groovy.transform.TupleConstructor
-import pl.training.groovy.bank.DepositObserver
+
 import pl.training.groovy.bank.accounts.generator.AccountNumberGenerator
 import pl.training.groovy.bank.accounts.repository.AccountsRepository
+import pl.training.groovy.bank.util.Subject
 
 @TupleConstructor
-class AccountsService implements Accounts {
+class AccountsService implements Accounts, Subject<Account> {
 
     private static final Long DEPOSIT_LIMIT = 10_000
 
     private AccountsRepository accountsRepository
     private AccountNumberGenerator accountNumberGenerator
-    private Set<DepositObserver> depositObservers = []
-
-    void addDepositObserver(DepositObserver observer) {
-        depositObservers += observer
-    }
 
     Account createAccount() {
         String accountNumber = accountNumberGenerator.next
@@ -25,17 +21,15 @@ class AccountsService implements Accounts {
     }
 
     void deposit(String accountNumber, Long funds) {
-        process(accountNumber) { account ->
+        process(accountNumber) { Account account ->
             account.deposit(funds)
-            checkDepositLimit(accountNumber, funds)
+            checkDepositLimit(account, funds)
         }
     }
 
-    private void checkDepositLimit(String accountNumber, Long funds) {
-        if (funds >= DEPOSIT_LIMIT) {
-            depositObservers.each {
-                it.onBigDeposit(accountNumber, funds)
-            }
+    private void checkDepositLimit(Account account, Long deposit) {
+        if (deposit >= DEPOSIT_LIMIT) {
+            notifyObservers(account)
         }
     }
 
