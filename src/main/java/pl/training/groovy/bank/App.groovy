@@ -15,12 +15,16 @@ import java.util.logging.Logger
 
 class App {
 
-    private NumberFormat formatter = NumberFormat.getCurrencyInstance()
+    private static def createFormatter = {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance()
+        formatter.format(it)
+    }
+
     private static def createAccounts = {
         AccountsRepository accountsRepository = new HashMapAccountsRepository()
         AccountNumberGenerator accountNumberGenerator = new FakeAccountNumberGenerator()
         Accounts accountsService = new AccountsService(accountsRepository: accountsRepository, accountNumberGenerator: accountNumberGenerator)
-        new ConsoleLogger(accounts: accountsService, currencyFormatter: { formatter.format(it) })
+        new ConsoleLogger(accounts: accountsService, currencyFormatter: createFormatter)
     }
 
     static void main(String[] args) {
