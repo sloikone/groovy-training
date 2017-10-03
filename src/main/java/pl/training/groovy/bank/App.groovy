@@ -15,19 +15,18 @@ import java.util.logging.Logger
 
 class App {
 
-    static void main(String[] args) {
+    private NumberFormat formatter = NumberFormat.getCurrencyInstance()
+    private static def createAccounts = {
         AccountsRepository accountsRepository = new HashMapAccountsRepository()
         AccountNumberGenerator accountNumberGenerator = new FakeAccountNumberGenerator()
-        Accounts accountsService = new AccountsService(
-                accountsRepository: accountsRepository,
-                accountNumberGenerator: accountNumberGenerator)
-        NumberFormat formatter = NumberFormat.getCurrencyInstance()
-        Accounts accounts = new ConsoleLogger(accounts: accountsService,
-                currencyFormatter: { formatter.format(it) })
+        Accounts accountsService = new AccountsService(accountsRepository: accountsRepository, accountNumberGenerator: accountNumberGenerator)
+        new ConsoleLogger(accounts: accountsService, currencyFormatter: { formatter.format(it) })
+    }
 
-        //---------------------------------------------
+    static void main(String[] args) {
         Logger.getLogger(ConsoleLogger.class.name).setLevel(Level.INFO)
-
+        Accounts accounts = createAccounts()
+        //---------------------------------------------
         Account account = accounts.createAccount()
         accounts.deposit(account.number, 100_000_000)
         accounts.withdraw(account.number, 100)
