@@ -15,21 +15,31 @@ import java.util.logging.Logger
 
 class App {
 
-    private static def createFormatter = {
+    private def currencyFormatter = {
         NumberFormat formatter = NumberFormat.getCurrencyInstance()
         formatter.format(it)
     }
 
-    private static def createAccounts = {
+    private createAccounts() {
         AccountsRepository accountsRepository = new HashMapAccountsRepository()
         AccountNumberGenerator accountNumberGenerator = new FakeAccountNumberGenerator()
-        Accounts accountsService = new AccountsService(accountsRepository: accountsRepository, accountNumberGenerator: accountNumberGenerator)
-        new ConsoleLogger(accounts: accountsService, currencyFormatter: createFormatter)
+        AccountsService accountsService = new AccountsService(accountsRepository: accountsRepository, accountNumberGenerator: accountNumberGenerator)
+        DepositObserver observer = new DepositObserver() {
+
+            @Override
+            void onBigDeposit(String accountNumber, Long funds) {
+                println "Deposit limit on account: ${accountNumber}"
+            }
+
+        }
+        accountsService.addDepositObserver(observer)
+        new ConsoleLogger(accounts: accountsService, currencyFormatter: currencyFormatter)
     }
 
     static void main(String[] args) {
+        App app = new App()
         Logger.getLogger(ConsoleLogger.class.name).setLevel(Level.INFO)
-        Accounts accounts = createAccounts()
+        Accounts accounts = app.createAccounts()
         //---------------------------------------------
         Account account = accounts.createAccount()
         accounts.deposit(account.number, 100_000_000)
