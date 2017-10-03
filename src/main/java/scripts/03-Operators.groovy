@@ -13,12 +13,17 @@ if (value != null) {
 
 println value != null ? "Value: ${value}" : "Brak wartości"
 
+if (!value) {
+    value = "Brak wartości"
+}
+
 println value ?: "Brak wartości"
 
 // Safe navigation, direct field access, method reference
 
 class Person {
     private String name
+
     String getName() {
         println "Get name"
         return name
@@ -30,11 +35,18 @@ class Person {
 
 def person = new Person()
 
-println person.@name?.contains('A')
+println person.@name?.contains('Abc')
 
 def sayHelloMethod = person.&sayHello
 sayHelloMethod()
 sayHelloMethod.call()
+
+def sayHello() {
+    println "Hello"
+}
+
+def fn = this.&sayHello
+println fn.class.name
 
 // Spread operator
 

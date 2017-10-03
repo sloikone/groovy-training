@@ -80,20 +80,15 @@ User userThree = userTwo
 userThree.lastName = 'Kowalska'
 userThree.sayHello()
 userTwo.sayHello()
+println userOne == testUser
 
 int someValue = 7
 int otherValue = someValue
 
 otherValue++
-
 println someValue
-
-byte byteValue = 2
-
-def name = "Groovy"
-name = 4
-
-println name.getClass()
+println otherValue
 
 
-println userOne == testUser
+
+

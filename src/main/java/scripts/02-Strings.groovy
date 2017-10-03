@@ -6,8 +6,8 @@ def age = 5
 def text = 'Ala ma kota o imieniu ${name}'
 def textWithInterpolation = "Ala ma kota o imieniu ${name}"
 def multilineText = '''\
-Ala ma kota o imieniu:
-${name}
+    Ala ma kota o imieniu:
+    ${name}
 '''
 def multilineTextWithInterpolation = """\
 Ala ma kota o imieniu:
