@@ -15,9 +15,11 @@ import java.util.logging.Logger
 
 class App {
 
+    private static final Long CURRENCY_UNIT = 100
+
     private def currencyFormatter = {
         NumberFormat formatter = NumberFormat.getCurrencyInstance()
-        formatter.format(it)
+        formatter.format((it as Double) / CURRENCY_UNIT)
     }
 
     private createAccounts() {
