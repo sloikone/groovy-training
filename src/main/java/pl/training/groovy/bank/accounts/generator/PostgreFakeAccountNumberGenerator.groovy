@@ -5,11 +5,11 @@ import groovy.sql.Sql
 import javax.sql.DataSource
 import java.util.concurrent.atomic.AtomicLong
 
-class PostgresFakeAccountNumberGenerator extends FakeAccountNumberGenerator {
+class PostgreFakeAccountNumberGenerator extends FakeAccountNumberGenerator {
 
     private static final String SELECT_MAX_ACCOUNT_NUMBER = "select max(number) from accounts"
 
-    PostgresFakeAccountNumberGenerator(DataSource dataSource) {
+    PostgreFakeAccountNumberGenerator(DataSource dataSource) {
         new Sql(dataSource).eachRow(SELECT_MAX_ACCOUNT_NUMBER, updateCounter)
     }
 

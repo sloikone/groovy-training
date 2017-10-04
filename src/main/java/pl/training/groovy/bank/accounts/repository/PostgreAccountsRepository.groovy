@@ -5,15 +5,15 @@ import pl.training.groovy.bank.accounts.Account
 
 import javax.sql.DataSource
 
-class PostgresAccountsRepository implements AccountsRepository {
+class PostgreAccountsRepository implements AccountsRepository {
 
     private static final String INSERT_ACCOUNT = "insert into accounts (number,balance) values(:number,:balance)"
     private static final String UPDATE_ACCOUNT_BALANCE = "update accounts set balance = :balance where id = :id"
-    private static final String SELECT_ACCOUNT_BY_NUMBER = "select * from accounts where number = :numer"
+    private static final String SELECT_ACCOUNT_BY_NUMBER = "select * from accounts where number = :number"
 
     private Sql sql
 
-    PostgresAccountsRepository(DataSource dataSource) {
+    PostgreAccountsRepository(DataSource dataSource) {
         sql = new Sql(dataSource)
     }
 
@@ -33,7 +33,7 @@ class PostgresAccountsRepository implements AccountsRepository {
     Account getByNumber(String number) {
         Account account
         sql.eachRow(SELECT_ACCOUNT_BY_NUMBER, ['number': number]) {
-            account = new Account(it)
+            account = new Account(id: it.id, number: it.number, balance: it.balance)
         }
         if (!account) {
             throw new AccountNotFoundException()
