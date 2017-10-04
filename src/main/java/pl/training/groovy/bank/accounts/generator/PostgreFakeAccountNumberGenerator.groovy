@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicLong
 
 class PostgreFakeAccountNumberGenerator extends FakeAccountNumberGenerator {
 
-    private static final String SELECT_MAX_ACCOUNT_NUMBER = "select max(number) from accounts"
+    private static final String SELECT_MAX_ACCOUNT_NUMBER = 'select max(number) from accounts'
 
     PostgreFakeAccountNumberGenerator(DataSource dataSource) {
         new Sql(dataSource).eachRow(SELECT_MAX_ACCOUNT_NUMBER, updateCounter)

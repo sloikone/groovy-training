@@ -1,8 +1,9 @@
-package pl.training.groovy.bank.accounts
+package pl.training.groovy.bank.accounts.service
 
 import groovy.transform.TupleConstructor
-
+import pl.training.groovy.bank.accounts.Accounts
 import pl.training.groovy.bank.accounts.generator.AccountNumberGenerator
+import pl.training.groovy.bank.accounts.model.Account
 import pl.training.groovy.bank.accounts.repository.AccountsRepository
 import pl.training.groovy.bank.util.Subject
 
