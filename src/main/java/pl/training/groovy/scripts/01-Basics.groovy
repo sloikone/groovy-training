@@ -1,4 +1,4 @@
-package scripts
+package pl.training.groovy.scripts
 // One line comment
 
 /*

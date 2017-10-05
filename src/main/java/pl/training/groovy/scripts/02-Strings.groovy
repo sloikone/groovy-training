@@ -1,4 +1,4 @@
-package scripts
+package pl.training.groovy.scripts
 
 def name = 'Mruczek'
 def age = 5

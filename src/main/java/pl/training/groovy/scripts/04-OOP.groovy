@@ -1,4 +1,4 @@
-package scripts
+package pl.training.groovy.scripts
 
 abstract class Employee {
     Integer salary = 0

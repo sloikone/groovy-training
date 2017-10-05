@@ -1,4 +1,4 @@
-package scripts
+package pl.training.groovy.scripts
 // Elvis operator
 
 def value
